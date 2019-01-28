@@ -15,7 +15,7 @@ app.use(cors());
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
-// parse requests of content-type - application/x-www-form-urlencoded
+// parse requests of content-typloginloginlogine - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
 mongoose.Promise = global.Promise;
@@ -32,6 +32,8 @@ mongoose.connect(dbConfig.url, {
 
 require('./app/routes/order.route.js')(app);
 require('./app/routes/item.route.js')(app);
+require('./app/routes/login.route.js')(app);
+
 
 // define a simple route
 app.get('/', (req, res) => {

@@ -13,6 +13,7 @@ exports.create = (req, res) => {
     // Create a Order
     const order = new Order(req.body);
     order.orderNumber = order._id;
+    order.orderStatus = 'pending';
     // Save order in the database
     order.save()
     .then(data => {
