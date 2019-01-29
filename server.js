@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
+const  autoIncrement = require('mongoose-auto-increment');
 
 const cors = require('cors')
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
+
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true
 }).then(() => {
