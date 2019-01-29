@@ -12,7 +12,6 @@ exports.create = (req, res) => {
 
     // Create a Order
     const order = new Order(req.body);
-    order.orderNumber = order._id;
     order.orderStatus = 'pending';
     // Save order in the database
     order.save()
@@ -25,9 +24,9 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve and return all orders from the database.
+// Retrieve and return all pending orders from the database.
 exports.findAll = (req, res) => {
-    Order.find()
+    Order.find({orderStatus:'pending'},null,{sort:{createdAt:-1}})
     .then(orders => {
         res.send(orders);
     }).catch(err => {
@@ -46,9 +45,12 @@ exports.update = (req, res) => {
             message: "Order content can not be empty"
         });
     }
-
+    let order = req.body;
+    if(order.orderItems.length === 0){
+        order.orderStatus = 'cancelled';
+    }
     // Find order and update it with the request body
-    Order.findOneAndUpdate({orderNumber:req.params.orderId}, req.body, {new: true})
+    Order.findOneAndUpdate({_id:req.params.orderId},order, {new: true})
     .then(note => {
         if(!note) {
             return res.status(404).send({
