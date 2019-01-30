@@ -26,6 +26,8 @@ exports.create = (req, res) => {
 
 // Retrieve and return all pending orders from the database.
 exports.findAll = (req, res) => {
+    var token = req.headers['x-auth-token'];
+    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
     Order.find({orderStatus:'pending'},null,{sort:{createdAt:-1}})
     .then(orders => {
         res.send(orders);
