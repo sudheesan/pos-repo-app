@@ -1,7 +1,12 @@
 const Order = require('../models/order.model');
-
+const auth = require('../util/jwt.util');
 // Create and Save a new Order
 exports.create = (req, res) => {
+
+    //validate authorization token
+    var token = req.headers['x-auth-token'];
+    if (!token || (token!== auth.xAuthToken)) return res.status(401).send({ auth: false, message: 'No token provided.' });
+   
     // Validate request
     if(!req.body) {
         console.log(req);
@@ -13,6 +18,13 @@ exports.create = (req, res) => {
     // Create a Order
     const order = new Order(req.body);
     order.orderStatus = 'pending';
+    //
+  
+    if( order.orderItems.length === 0){
+        return res.status(400).send({
+            message: "Please add items to the order"
+        });
+    }
     // Save order in the database
     order.save()
     .then(data => {
@@ -26,6 +38,9 @@ exports.create = (req, res) => {
 
 // Retrieve and return all pending orders from the database.
 exports.findAll = (req, res) => {
+    //validate authorization token
+    var token = req.headers['x-auth-token'];
+    if (!token || (token!==auth.xAuthToken)) return res.status(401).send({ auth: false, message: 'No token provided.' }); 
     Order.find({orderStatus:'pending'},null,{sort:{createdAt:-1}})
     .then(orders => {
         res.send(orders);
@@ -39,10 +54,15 @@ exports.findAll = (req, res) => {
 
 // Update a order identified by the orderId in the request
 exports.update = (req, res) => {
+
+      //validate authorization token
+    var token = req.headers['x-auth-token'];
+    if (!token || (token!==auth.xAuthToken)) return res.status(401).send({ auth: false, message: 'No token provided.' });
+   
     // Validate Request
     if(!req.body) {
         return res.status(400).send({
-            message: "Order content can not be empty"
+            message: "Order content can not be empty bitch"
         });
     }
     let order = req.body;
