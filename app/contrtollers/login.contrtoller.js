@@ -12,7 +12,7 @@ exports.login = (req, res) => {
         });
     }else {
         res.status(401).send({
-            message: "Unoatherized access"
+            message: "Incorrect credentials"
         });
     }
 
