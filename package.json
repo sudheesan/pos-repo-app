@@ -4,7 +4,8 @@
   "description": "point of sale application server",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test jest",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,20 @@
     "mongoose": "^5.4.4",
     "mongoose-auto-increment": "^5.0.1",
     "react-router-dom": "^4.3.1"
-  }
+  },
+  "devDependencies": {
+    "jest": "^24.0.0",
+    "supertest": "^3.4.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sudheesan/pos-repo-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sudheesan/pos-repo-app/issues"
+  },
+  "homepage": "https://github.com/sudheesan/pos-repo-app#readme"
 }
