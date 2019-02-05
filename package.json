@@ -4,7 +4,7 @@
   "description": "point of sale application server",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --coverage",
     "start": "node index.js"
   },
   "author": "",
