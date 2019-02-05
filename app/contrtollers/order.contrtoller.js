@@ -59,11 +59,11 @@ exports.update = (req, res) => {
       //validate authorization token
     var token = req.headers['x-auth-token'];
     if (!token || (token!==auth.xAuthToken)) return res.status(401).send({ auth: false, message: 'No token provided.' });
-   
+    
     // Validate Request
-    if(!req.body) {
+    if(!req.body || (Object.keys(req.body).length ===0)) {
         return res.status(400).send({
-            message: "Order content can not be empty bitch"
+            message: "Order content can not be empty "
         });
     }
     let order = req.body;
